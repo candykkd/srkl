@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日祝福</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #fff0f8 0%, #ffd6e7 50%, #ff9ecc 100%);
+            position: relative;
+            overflow: hidden;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        /* 音乐按钮 */
+        .music-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .music-btn:active {
+            transform: scale(0.95);
+        }
+        .music-icon {
+            width: 25px;
+            height: auto;
+        }
+        /* 飘图容器 */
+        .float-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .float-item {
+            position: absolute;
+            width: 20px;
+            height: auto;
+            opacity: 0.6;
+            animation: float-down linear infinite;
+            left: calc(var(--left) * 1%);
+            animation-duration: calc(15s + var(--duration) * 5s);
+            animation-delay: calc(var(--delay) * 2s);
+        }
+        .float-item:nth-child(1) { --left: 5; --duration: 0; --delay: 0; }
+        .float-item:nth-child(2) { --left: 15; --duration: 1; --delay: 1; }
+        .float-item:nth-child(3) { --left: 25; --duration: 2; --delay: 2; }
+        .float-item:nth-child(4) { --left: 35; --duration: 3; --delay: 3; }
+        .float-item:nth-child(5) { --left: 45; --duration: 4; --delay: 4; }
+        .float-item:nth-child(6) { --left: 55; --duration: 0; --delay: 5; }
+        .float-item:nth-child(7) { --left: 65; --duration: 1; --delay: 6; }
+        .float-item:nth-child(8) { --left: 75; --duration: 2; --delay: 7; }
+        .float-item:nth-child(9) { --left: 85; --duration: 3; --delay: 8; }
+        .float-item:nth-child(10) { --left: 90; --duration: 4; --delay: 9; }
+        .float-item:nth-child(11) { --left: 20; --duration: 2; --delay: 0.5; }
+        .float-item:nth-child(12) { --left: 70; --duration: 1; --delay: 1.5; }
+        .float-item:nth-child(13) { --left: 40; --duration: 3; --delay: 2.5; }
+        .float-item:nth-child(14) { --left: 80; --duration: 0; --delay: 3.5; }
+        @keyframes float-down {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        /* 气球装饰 */
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.8;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+        .balloon1 { background-color: #ff6b9d; left: 10%; bottom: 20%; animation-delay: 0s; }
+        .balloon2 { background-color: #845ec2; right: 15%; bottom: 30%; animation-delay: 2s; }
+        .balloon3 { background-color: #ffc75f; left: 40%; bottom: 10%; animation-delay: 4s; }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(-10deg); }
+        }
+        /* 蛋糕图片 */
+        .cake-icon {
+            width: 240px;
+            height: auto;
+            margin-bottom: 30px;
+            animation: scale 2s ease-in-out infinite alternate;
+        }
+        @keyframes scale {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        /* 祝福语区域 */
+        .blessing-box {
+            width: 85%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(255, 158, 204, 0.3);
+            text-align: left;
+            position: relative;
+            z-index: 20;
+        }
+        .blessing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            animation: fadeIn 1s ease;
+        }
+        .blessing-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            text-indent: 2em;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff6b9d, #845ec2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn 1.5s ease;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* 彩屑装饰 */
+        .confetti {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(#ffc75f 2px, transparent 2px),
+                radial-gradient(#845ec2 2px, transparent 2px),
+                radial-gradient(#ff6b9d 2px, transparent 2px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px, 60px 60px;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        /* 居中容器 */
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 音乐控制按钮 -->
+        <div class="music-btn" onclick="toggleMusic()">
+            <img class="music-icon" id="musicImg" src="imgs/shengyOpen.png" alt="音乐">
+        </div>
+
+        <!-- 飘图容器 -->
+        <div class="float-elements">
+            <img class="float-item" src="imgs/lwImg.png" alt="礼物">
+            <img class="float-item" src="imgs/axImg.png" alt="爱心">
+            <img class="float-item" src="imgs/xxImg.png" alt="星星">
+            <img class="float-item" src="imgs/xdgImg.png" alt="小蛋糕">
+            <img class="float-item" src="imgs/qzImg.png" alt="气球">
+            <img class="float-item" src="imgs/lwImg.png" alt="礼物">
+            <img class="float-item" src="imgs/axImg.png" alt="爱心">
+            <img class="float-item" src="imgs/xxImg.png" alt="星星">
+            <img class="float-item" src="imgs/xdgImg.png" alt="小蛋糕">
+            <img class="float-item" src="imgs/qzImg.png" alt="气球">
+            <img class="float-item" src="imgs/lwImg.png" alt="礼物">
+            <img class="float-item" src="imgs/axImg.png" alt="爱心">
+            <img class="float-item" src="imgs/xxImg.png" alt="星星">
+            <img class="float-item" src="imgs/qzImg.png" alt="气球">
+        </div>
+
+        <!-- 气球装饰 -->
+        <div class="balloon balloon1"></div>
+        <div class="balloon balloon2"></div>
+        <div class="balloon balloon3"></div>
+
+        <!-- 蛋糕图片 -->
+        <img class="cake-icon" src="imgs/dgImg.png" alt="蛋糕">
+
+        <!-- 祝福语区域 -->
+        <div class="blessing-box">
+            <div class="blessing-title">亲爱的朋友：</div>
+            <div class="blessing-content">
+                在这专属于你的美好日子里，愿所有的快乐都为你奔赴，所有的幸福都将你簇拥，所有的温馨都萦绕左右，所有的好运都常伴身旁；也愿你往后的每一天都缀满温柔与惊喜，如绚烂画卷般动人，生日快乐呀，愿你永远被爱包围，岁岁皆安暖！
+            </div>
+        </div>
+
+        <!-- 底部装饰 -->
+        <div class="confetti"></div>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="bgm" src="audio/HappyBirthday-bgm.mp3" loop>
+
+    <script>
+        let isPlayMusic = true;
+        const bgm = document.getElementById('bgm');
+        const musicImg = document.getElementById('musicImg');
+
+        // 页面加载自动播放音乐（处理浏览器限制）
+        window.onload = function() {
+            // 浏览器自动播放限制：需要用户交互后才能播放，这里添加一个隐性触发
+            document.body.addEventListener('click', function initAudio() {
+                if (isPlayMusic) {
+                    bgm.play().catch(err => {
+                        console.log('播放需要用户交互，点击页面任意位置即可');
+                        isPlayMusic = false;
+                        musicImg.src = 'imgs/shengyClose.png';
+                    });
+                }
+                document.body.removeEventListener('click', initAudio);
+            }, { once: true });
+
+            // 尝试自动播放
+            bgm.play().catch(err => {
+                console.log('自动播放失败，点击页面任意位置触发');
+                isPlayMusic = false;
+                musicImg.src = 'imgs/shengyClose.png';
+            });
+        };
+
+        // 切换音乐播放/暂停
+        function toggleMusic() {
+            if (isPlayMusic) {
+                bgm.pause();
+                musicImg.src = 'imgs/shengyClose.png';
+            } else {
+                bgm.play();
+                musicImg.src = 'imgs/shengyOpen.png';
+            }
+            isPlayMusic = !isPlayMusic;
+        }
+    </script>
+</body>
+</html>
