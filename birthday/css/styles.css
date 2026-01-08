@@ -87,7 +87,7 @@ body {
 
 .greeting {
   font-size: 24px;
-  color: #fff;
+  color: #FF359A;
   text-shadow: 
     0 0 5px rgba(255, 255, 255, 1),
     0 0 10px rgba(255, 255, 255, 0.9),
@@ -107,7 +107,7 @@ body {
 .blessing-text {
   font-size: 18px;
   line-height: 2;
-  color: #fff;
+  color: #FF359A;
   text-shadow: 
     0 0 6px rgba(255, 255, 255, 0.98),
     0 0 12px rgba(255, 182, 193, 0.85),
