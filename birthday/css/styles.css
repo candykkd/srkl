@@ -82,7 +82,7 @@ body {
   margin: 0 auto;
   padding: 0 15px;
   z-index: 3;
-  text-align: left;
+  text-align: center;
 }
 
 .greeting {
